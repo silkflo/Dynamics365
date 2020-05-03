@@ -42,7 +42,8 @@ namespace MyPlugins
 
                 try
                 {
-                   //string firstNameValue = string.Empty;
+                    //string firstNameValue = string.Empty;
+                //    string key = context.SharedVariables["key1"].ToString();
 
                     string lastNameValue = contact.GetAttributeValue<string>(LogicalName.contactLastNameField);
                     string firstNameValue = contact.GetAttributeValue<string>(LogicalName.contactFirstNameField);
@@ -79,8 +80,8 @@ namespace MyPlugins
 
                        //write data to Atribute
                         contact.Attributes.Add(LogicalName.contactDescriptionField, "Hello " + firstNameValue + " " + lastNameValue);
-         
-                                  
+
+                 //   throw new InvalidPluginExecutionException(key);
                 }
 
 

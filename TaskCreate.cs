@@ -39,7 +39,11 @@ namespace MyPlugins
 
                 try
                 {
+                
+                
                     Entity taskRecord = new Entity("task");
+
+                 
 
                     //single line of text
                     taskRecord.Attributes.Add("subject", "Follow up");
@@ -60,7 +64,8 @@ namespace MyPlugins
 
                     //create another entity with all kind of fields filled
                     //like when create a contact, create an account...
-
+               
+                  
 
                 }
 

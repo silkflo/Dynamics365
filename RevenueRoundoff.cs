@@ -8,7 +8,7 @@ using System.ServiceModel;
 
 namespace MyPlugins
 {
-    public class CreateHelloWorld : IPlugin
+    public class RevenueRoundoff : IPlugin
 {
     public void Execute(IServiceProvider serviceProvider)
     {
@@ -28,33 +28,20 @@ namespace MyPlugins
             context.InputParameters["Target"] is Entity)
         {
 
-            Entity contact = (Entity)context.InputParameters["Target"];
+            Entity account = (Entity)context.InputParameters["Target"];
 
             try
             {
-                    //use a variable in an other script
-                    context.SharedVariables.Add("key1", "some info");
+                    if(account.Attributes[LogicalName.accountRevenueField]!= null) // if update to a blank field
 
-                    string firstNameValue = string.Empty;
-
-
-                    if (contact.Attributes.Contains(LogicalName.contactFirstNameField))
                     {
-                        firstNameValue = contact.Attributes[LogicalName.contactFirstNameField].ToString();
+                        decimal revenue = ((Money)account.Attributes[LogicalName.accountRevenueField]).Value;
+                        revenue = Math.Round(revenue, 2);
                     }
-
-                    string lastNameValue = contact.Attributes[LogicalName.contactLastNameField].ToString();
-
-
-                    //write data to Atribute
-                    contact.Attributes.Add(LogicalName.contactDescriptionField, "Hello " + firstNameValue + " " + lastNameValue);
-
-                   
-
 
                 }
 
-                catch (FaultException<OrganizationServiceFault> ex)
+            catch (FaultException<OrganizationServiceFault> ex)
             {
                 throw new InvalidPluginExecutionException("An error occurred in MyPlug-in.", ex);
             }

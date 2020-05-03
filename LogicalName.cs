@@ -24,6 +24,7 @@ namespace MyPlugins
         public static string accountImageField = "entityimage";                 //image
         public static string accountPrimarryContact = "primarycontactid";       //primary contact
         public static string accountLookupField = "new_lookup";                 //lookup
+        public static string accountRevenueField = "revenue";                   //revenue
 
 
 
