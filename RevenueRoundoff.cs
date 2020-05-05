@@ -32,11 +32,27 @@ namespace MyPlugins
 
             try
             {
-                    if(account.Attributes[LogicalName.accountRevenueField]!= null) // if update to a blank field
+                    /*
+                    It is  an infinite calling the method. For example
+                    You have a workflow(trigger by when status field change) in which an account is updated. 
+                    You have account plugin and it is configured as "update" message post operation. 
+                    In that plugin you did update the account status.
+                    In the above what happens, if the workflow trigger first workflow and then call plugin and then from plugin it call same workflow.
+                    So it continuously looping.
+                    To avoid this CRM by default they given how much looped it went, so you use "context.depth >1 return" in plugin code.
+                    */
+
+                    tracingService.Trace(context.Depth.ToString());
+                    if (context.Depth > 1) //if depth >1 means infinity look, update trigger by a non human
+                        return;            //terminates execution of the method
+
+                    if (account.Attributes[LogicalName.accountRevenueField]!= null) // if update to a blank field
 
                     {
                         decimal revenue = ((Money)account.Attributes[LogicalName.accountRevenueField]).Value;
-                        revenue = Math.Round(revenue, 2);
+                        revenue = Math.Round(revenue, 1);
+
+                        account.Attributes[LogicalName.accountRevenueField] = new Money(revenue);
                     }
 
                 }
